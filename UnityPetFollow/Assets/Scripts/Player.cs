@@ -11,6 +11,9 @@ namespace KID
 
         private Rigidbody rig;
 
+        public Transform pet;
+        public Transform test;
+
         private void Start()
         {
             rig = GetComponent<Rigidbody>();
@@ -24,6 +27,8 @@ namespace KID
         private void FixedUpdate()
         {
             Move();
+
+            PetTurn();
         }
 
         private void Move()
@@ -36,6 +41,18 @@ namespace KID
         {
             float h = Input.GetAxisRaw("Horizontal");
             transform.Rotate(0, h * Time.deltaTime * turn, 0);
+        }
+
+        /// <summary>
+        /// 寵物更隨
+        /// </summary>
+        private void PetTurn()
+        {
+            Vector3 petPosition = pet.position;
+            Vector3 plaPosition = test.position;
+
+            pet.position = Vector3.Lerp(petPosition, plaPosition, 0.5f);
+            pet.LookAt(plaPosition);
         }
     }
 }
